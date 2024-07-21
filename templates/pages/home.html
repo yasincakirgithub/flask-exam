@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block customCss %}
+  <link rel="stylesheet" href="/css/main.css" />
+{% endblock %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+  <!-- Flash mesajlarını göster -->
+  {% with messages=get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <nav class="nav">
+    <input id="menu" type="checkbox" />
+    <label for="menu">Menu</label>
+    <ul class="menu">
+      <li>
+        <a href="{{ url_for('pages.core.home_route') }}">
+          <span>Anasayfa</span>
+          <i class="fas fa-address-card" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('quiz.quiz_question_list') }}">
+          <span>Quiz</span>
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block customCss %}
+  <link rel="stylesheet" href="/css/quiz.css" />
+{% endblock %}
+
+{% block title %}
+  Quiz Page
+{% endblock %}
+
+{% block content %}
+  <div class="quiz-container">
+    <div class="row">
+      <div class="col-11"><h1>Quiz</h1></div>
+      <div class="col-1">High Score <span class="badge badge-success">{{highest_score}}%</span></div>
+    </div>
+    
+    <form method="POST">
+      {% for question in questions %}
+        <div class="question-block">
+          <p>
+            <strong>{{ loop.index }}. {{ question.text }}</strong>
+          </p>
+          {% if answer_type.single_line == question.answer_type %}
+            <input required type="text" name="question-{{ question.id }}" size="50" /><br />
+          {% elif answer_type.choice == question.answer_type %}
+            <label><input required type="radio" name="question-{{ question.id }}" value="{{ question.a }}" /> {{ question.a }}</label><br />
+            <label><input required type="radio" name="question-{{ question.id }}" value="{{ question.b }}" /> {{ question.b }}</label><br />
+            <label><input required type="radio" name="question-{{ question.id }}" value="{{ question.c }}" /> {{ question.c }}</label><br />
+            <label><input required type="radio" name="question-{{ question.id }}" value="{{ question.d }}" /> {{ question.d }}</label><br />
+          {% elif answer_type.yes_no == question.answer_type %}
+            <label><input required type="radio" name="question-{{ question.id }}" value="yes" />Yes</label><br />
+            <label><input required type="radio" name="question-{{ question.id }}" value="no" />No</label><br />
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+{% endblock %}
